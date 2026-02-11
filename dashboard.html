@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BridgeBrain • Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Full screen red alert overlay -->
+<div id="danger-overlay">ALERT — BRIDGE IS IN DANGER</div>
+
+<header>
+    <h2>Bridge Monitoring Dashboard</h2>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+</header>
+
+<section class="info-row">
+    <div class="info-box"><strong>Name:</strong> Riverview Bridge</div>
+    <div class="info-box"><strong>Location:</strong> Pune</div>
+    <div class="info-box"><strong>Type:</strong> Suspension</div>
+    <div class="info-box"><strong>Capacity:</strong> 1000 tons</div>
+    <div class="info-box"><strong>Vehicles on Bridge:</strong>
+        <span id="vehicle-count-box">0</span>
+    </div>
+</section>
+
+<section class="graphs">
+    <div class="graph-card">
+        <h3>Load Sensor</h3>
+        <canvas id="loadChart"></canvas>
+    </div>
+    <div class="graph-card">
+        <h3>Vibration Data</h3>
+        <canvas id="vibrationChart"></canvas>
+    </div>
+    <div class="graph-card">
+        <h3>Tilt Data</h3>
+        <canvas id="tiltChart"></canvas>
+    </div>
+</section>
+
+<section class="history">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Vehicle History (latest passes)</h3>
+        <button id="download-excel-btn" onclick="window.location.href='/api/download-excel'">
+            Download Excel Log
+        </button>
+    </div>
+    <div id="vehicle-history"></div>
+</section>
+
+<section class="health">
+    <h3>Bridge Health Analysis</h3>
+    <p>Status: <span id="status-text">Stable</span></p>
+    <p>Vibration Level: <span id="vibration-text">0 Hz</span></p>
+    <p>Tilt Angle: <span id="tilt-text">0°</span></p>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

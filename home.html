@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BridgeBrain • Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h2>BridgeBrain Monitoring System</h2>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <video autoplay muted loop class="bg-video">
+        <source src="17087-278405152.mp4" type="video/mp4">
+    </video>
+    <div class="hero-text">
+        <h1>Real-Time Bridge Safety Monitoring</h1>
+        <p>AI-assisted load, vibration and tilt analysis</p>
+        <a href="dashboard.html" class="btn">Open Dashboard</a>
+    </div>
+</section>
+
+<section class="live-summary">
+    <h2>Live Bridge Summary</h2>
+    <div class="summary-box">
+        Total Load: <span id="summary-load">0 kg</span>
+    </div>
+    <div class="summary-box">
+        Vehicles on Bridge: <span id="summary-count">0</span>
+    </div>
+    <div class="summary-box">
+        Status: <span id="summary-status">Stable</span>
+    </div>
+</section>
+
+<script>
+async function pollHome() {
+    try {
+        const res = await fetch("/api/latest-readings");
+        const data = await res.json();
+        if (data.length > 0) {
+            const last = data[data.length - 1];
+            const load = Number(last.totalLoad || 0);
+            const count = Number(last.vehicleCount || 0);
+            document.getElementById("summary-load").innerText = load + " kg";
+            document.getElementById("summary-count").innerText = count;
+
+            document.getElementById("summary-status").innerText =
+                load > 9000 ? "ALERT: BRIDGE IN DANGER" : "Stable";
+        }
+    } catch (e) {
+        // ignore
+    }
+    setTimeout(pollHome, 2000);
+}
+pollHome();
+</script>
+</body>
+</html>
